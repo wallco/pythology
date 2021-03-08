@@ -1,0 +1,9 @@
+README.md
+setup.py
+pythology/__init__.py
+pythology/functions.py
+pythology.egg-info/PKG-INFO
+pythology.egg-info/SOURCES.txt
+pythology.egg-info/dependency_links.txt
+pythology.egg-info/requires.txt
+pythology.egg-info/top_level.txt
