@@ -15,6 +15,7 @@ setup(
                         Thus, the package aims to eliminate the need for advanced mathematical 
                         knowledge and allow the user to focus more on the conceptual and biological aspect with freedom
                         to explore more model and parameter possibilities.""",
+    long_description_content_type="text/plain",
     author="Wallace Correa de Moura Filho",
     author_email='wallacecmf@poli.ufrj.br',
     license="MIT",
