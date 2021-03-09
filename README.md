@@ -1,4 +1,6 @@
-# pythology 1.0.0
+# Pythology 1.0.2
+
+## Introduction
 
 Pythology is a scientific python package with the purpose of simplifying the implementation
 of epidemiological compartmental models.
