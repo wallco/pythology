@@ -10,4 +10,4 @@ in a much more high-level way than implementing the model by hand, only needing 
 
 Thus, the package aims to eliminate the need for advanced mathematical 
 knowledge and allow the user to focus more on the conceptual and biological aspect with freedom
-to explore more model and parameter possibilities.
+to explore model and parameter combinations, amplifying the accessibility of such technologies.
