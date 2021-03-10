@@ -124,6 +124,8 @@ Model initialization example:
 
 `S, I, R = mysirmodel.build(population=200, initial=initial, time=365)`
 
+This way, the variables S, I and R will be assigned one list each, containing 365 values (the number of individuals in that compartment each day) to be plotted and analyzed.
+
 It's important to maintain consistent order when declaring compartments.
 
 ## 3- To be implemented
