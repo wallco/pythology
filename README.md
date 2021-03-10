@@ -124,7 +124,7 @@ It's important to maintain consistent order when declaring compartments.
 
 ## 3- To be implemented
 
-As said before, Pythology is in extremely early development. Some of the envisioned future features are:
+As said before, Pythology is in extremely early development stage. Some of the envisioned future features are:
 
 * Method for plotting inside the package
 * Support for contact rates varying through time
