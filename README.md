@@ -1,4 +1,4 @@
-# Pythology 1.0.3
+# Pythology 1.0.3 Documentation
 
 ## 1 - Introduction
 
@@ -24,6 +24,10 @@ of compartmental models: the SIR (Susceptible, Infected and Recovered) model.
 
 [logo]: sir.png "SIR model"
 
+The package should first by installed by running `pip install pythology` on console. 
+The dependencies are SciPy, NumPy and Matplotlib.
+
+You also need to `import * from pythology.models`.
 
 Pythology revolves around three key concepts to construct the compartmental mode: Compartments, Flows and Models themselves.
 
