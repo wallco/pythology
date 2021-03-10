@@ -85,7 +85,7 @@ Initialization example:
 
 `si = MainFlow(contactrate=1)`
 
- `ir = Flow(parameter_label='gamma', rate=0.5, origin='I', destiny='R')`
+ `ir = Flow(parameter_label='gama', rate=0.5, origin='I', destiny='R')`
 
 `flowlist = [si, ir]`
 
