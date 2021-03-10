@@ -27,7 +27,7 @@ of compartmental models: the SIR (Susceptible, Infected and Recovered) model.
 
 Pythology revolves around three key concepts to construct the compartmental mode: Compartments, Flows and Models themselves.
 
-###2.1 - Compartments
+### 2.1 - Compartments
 
 Each compartment is one "box" of the model where one individual may be.
 They are implemented through simple 1-character strings just to identify the model foundations.
@@ -37,7 +37,7 @@ Example:
 
 `compartmentlist = ['S', 'I', 'R']`
 
-###2.2 - Flows
+### 2.2 - Flows
 
 **2.2.1 - Flow**
 
