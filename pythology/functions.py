@@ -27,6 +27,13 @@ class Flow:
         else:
             self.parameter_label = parameter_label
 
+class MainFlow(Flow):
+    def __init__(self, contactrate):
+        self.parameter_label = 'beta'
+        self.rate = contactrate
+        self.origin = 'S'
+        self.destiny = 'I'
+
 class CompartmentalModel:
     def __init__(self, compartments, flows):
         for compartment in compartments:
@@ -39,7 +46,7 @@ class CompartmentalModel:
             self.compartments = compartments
 
         for flow in flows:
-            if type(flow) != Flow:
+            if type(flow) not in (Flow, MainFlow):
                 raise AttributeError('The "flows" argument must be a list of flow objects')
 
         if type(flows) != list:
@@ -47,54 +54,87 @@ class CompartmentalModel:
         else:
             self.flows = flows
 
-    def build(self, population, initial, params, time):
+    def build(self, population, initial, time):
+        for key, value in initial.items():
+            if type(value) != int or type(key) != str or len(key) != 1:
+                raise ValueError('The "initial" parameter must be a dictionary with 1-character strings as keys and integers as values!')
+        if population != sum(initial.values()):
+            raise ValueError('The sum of all initial values must be equal to the total population!')
         derivpos = {}
         derivneg = {}
         startarguments = ', '.join([str(flow.parameter_label) for flow in self.flows])
-        start = 'def deriv(y, t, {}):'.format(startarguments) + '\n\t'
+        start = 'import numpy as np\ndef deriv(y, timelist, N, {}):'.format(startarguments) + '\n\t'
         var = ', '.join(self.compartments) + ' = y\n'
+        paramstring =''
         for flow in self.flows:
-              if flow.origin in derivneg.keys():
-                  derivneg[flow.origin] += '-' + flow.parameter_label
-              else:
-                  derivneg[flow.origin] = '-' + flow.parameter_label
+            if type(flow) != MainFlow:
+                if flow.origin in derivneg.keys():
+                    derivneg[flow.origin] += '-' + flow.parameter_label +'*{}'.format(flow.origin)
+                else:
+                    derivneg[flow.origin] = '-' + flow.parameter_label+'*{}'.format(flow.origin)
 
-              if flow.destiny in derivpos.keys():
-                  derivpos[flow.destiny] += '+' + flow.parameter_label
-              else:
-                  derivpos[flow.destiny] = '+' + flow.parameter_label
+                if flow.destiny in derivpos.keys():
+                  derivpos[flow.destiny] += '+' + flow.parameter_label+'*{}'.format(flow.origin)
+                else:
+                     derivpos[flow.destiny] = '+' + flow.parameter_label+'*{}'.format(flow.origin)
+                paramstring = paramstring + '{} = {}\n'.format(flow.parameter_label, flow.rate)
+            else:
+                if flow.origin in derivneg.keys():
+                    derivneg[flow.origin] += '-' + flow.parameter_label +'*{}'.format(flow.origin) + '*I/N'
+                else:
+                    derivneg[flow.origin] = '-' + flow.parameter_label + '*{}'.format(flow.origin) + '*I/N'
 
+                if flow.destiny in derivpos.keys():
+                    derivpos[flow.destiny] += '+' + flow.parameter_label + '*{}'.format(flow.origin) + '*I/N'
+                else:
+                    derivpos[flow.destiny] = '+' + flow.parameter_label + '*{}'.format(flow.origin) + '*I/N'
+                paramstring = paramstring + '{} = {}\n'.format(flow.parameter_label, flow.rate)
+
+        initialstring = ''
         equations = '\t'
+
         for compartment in self.compartments:
             try:
-                pospart = derivpos[compartment] + '*{}'.format(compartment)
+                pospart = derivpos[compartment]
             except KeyError:
                 pospart = ''
             try:
-                negpart = derivneg[compartment] + '*{}'.format(compartment)
+                negpart = derivneg[compartment]
             except KeyError:
                 negpart = ''
             equations += 'd{}dt = '.format(compartment) + pospart + negpart + '\n\t'
+            initialstring = initialstring + ('{}0 = {}'.format(compartment, str(initial[compartment])+'\n'))
+
 
         derivlist = ['d{}dt'.format(c) for c in self.compartments]
         ret = 'return {}'.format(', '.join(derivlist))
-        func = start + var + equations + ret
-        print (func)
-        #exec(func)
-
-
+        pop = '\nN = {}\n'.format(population)
+        timeint = 'timelist = np.linspace(0, {}, {})'.format(time, time)
+        initialist = '\ny0 = {}0\n'.format('0, '.join(self.compartments))
+        integrate = 'retu = odeint(deriv, y0, timelist, args=(N, {}))'.format(', '.join(flow.parameter_label for flow in self.flows))
+        final = '\n{} = retu.T'.format(', '.join(compartment for compartment in self.compartments))
+        func = start + var + equations + ret + pop + initialstring + paramstring + timeint + initialist + integrate + final
+        exec(func, globals())
+        return retu.T
 
 compartmentlist = ['S', 'I', 'R']
 
-si = Flow(parameter_label='beta', rate=1, origin='S',destiny='I')
+
+si = MainFlow(contactrate=1)
 ir = Flow(parameter_label='mi', rate=0.5, origin='I', destiny='R')
 
 flowlist = [si, ir]
 
 a = CompartmentalModel(compartments=compartmentlist, flows=flowlist)
 
+initial = {
+    'S': 5,
+    'I': 5,
+    'R': 5
+}
 
-a.build(1,1, 1, 1)
+S, I, R = a.build(15, initial, 365)
+
 
 
 
