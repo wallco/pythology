@@ -134,6 +134,3 @@ As said before, Pythology is in extremely early development. Some of the envisio
 
 Please feel free to contact me if you have any questions, suggestions or desire to help this project!
 
-
-
-
