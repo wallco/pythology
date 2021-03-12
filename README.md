@@ -1,4 +1,4 @@
-# Pythology 1.0.3 Documentation
+# Pythology 1.0.5 Documentation
 
 ## 1 - Introduction
 
