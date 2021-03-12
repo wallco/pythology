@@ -114,28 +114,9 @@ class CompartmentalModel:
         integrate = 'retu = odeint(deriv, y0, timelist, args=(N, {}))'.format(', '.join(flow.parameter_label for flow in self.flows))
         final = '\n{} = retu.T'.format(', '.join(compartment for compartment in self.compartments))
         func = start + var + equations + ret + pop + initialstring + paramstring + timeint + initialist + integrate + final
+        print (func)
         exec(func, globals())
         return retu.T
-
-compartmentlist = ['S', 'I', 'R']
-
-
-si = MainFlow(contactrate=1)
-ir = Flow(parameter_label='mi', rate=0.5, origin='I', destiny='R')
-
-flowlist = [si, ir]
-
-a = CompartmentalModel(compartments=compartmentlist, flows=flowlist)
-
-initial = {
-    'S': 5,
-    'I': 5,
-    'R': 5
-}
-
-S, I, R = a.build(15, initial, 365)
-
-
 
 
 
