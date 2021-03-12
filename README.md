@@ -1,4 +1,4 @@
-# Pythology 1.0.3
+# Pythology 1.0.3 Documentation
 
 ## 1 - Introduction
 
@@ -24,6 +24,10 @@ of compartmental models: the SIR (Susceptible, Infected and Recovered) model.
 
 [logo]: sir.png "SIR model"
 
+The package should first by installed by running `pip install pythology` on console. 
+The dependencies are SciPy, NumPy and Matplotlib.
+
+You also need to `from pythology.functions import *`.
 
 Pythology revolves around three key concepts to construct the compartmental mode: Compartments, Flows and Models themselves.
 
@@ -81,7 +85,7 @@ Initialization example:
 
 `si = MainFlow(contactrate=1)`
 
- `ir = Flow(parameter_label='gamma', rate=0.5, origin='I', destiny='R')`
+ `ir = Flow(parameter_label='gama', rate=0.5, origin='I', destiny='R')`
 
 `flowlist = [si, ir]`
 
@@ -120,11 +124,13 @@ Model initialization example:
 
 `S, I, R = mysirmodel.build(population=200, initial=initial, time=365)`
 
+This way, the variables S, I and R will be assigned one list each, containing 365 values (the number of individuals in that compartment each day) to be plotted and analyzed.
+
 It's important to maintain consistent order when declaring compartments.
 
 ## 3- To be implemented
 
-As said before, Pythology is in extremely early development. Some of the envisioned future features are:
+As said before, Pythology is in extremely early development stage. Some of the envisioned future features are:
 
 * Method for plotting inside the package
 * Support for contact rates varying through time
