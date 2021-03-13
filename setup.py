@@ -4,7 +4,7 @@ from setuptools import find_packages, setup
 setup(
     name="pythology",
     packages=find_packages(include=['pythology']),
-    version="1.0.5",
+    version="1.0.8",
     description="Library dedicated to epidemiological compartmental modeling",
     long_description="""Pythology is a scientific python package with the purpose of simplifying the implementation
                         of epidemiological compartmental models.
@@ -19,7 +19,7 @@ setup(
     author="Wallace Correa de Moura Filho",
     author_email='wallacecmf@poli.ufrj.br',
     license="MIT",
-    install_requires=['numpy', 'matplotlib', 'scipy'],
+    install_requires=['numpy', 'scipy'],
     python_requires='>=3.8',
     url=''
 )

@@ -1,7 +1,5 @@
 import numpy as np
 from scipy.integrate import odeint
-import matplotlib.pyplot as plt
-from pprint import pprint
 
 class Flow:
     def __init__(self, parameter_label, rate, origin=None, destiny=None):
